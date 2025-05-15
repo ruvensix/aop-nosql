@@ -1,26 +1,9 @@
 const mongoose = require('mongoose');
 
-const movieSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true, // Marca como obrigatório
-  },
-  director: {
-    type: String,
-    required: true,
-  },
-  year: {
-    type: Number,
-    required: true,
-  },
-  genre: {
-    type: String,
-    required: true,
-  },
-  rating: {
-    type: Number,
-    required: true,
-  }
+// Schema flexível para aceitar qualquer estrutura (útil com MongoDB sample data)
+const movieSchema = new mongoose.Schema({}, {
+  collection: 'movies', // Usa explicitamente a coleção correta
+  strict: false          // Aceita qualquer campo presente no documento
 });
 
 module.exports = mongoose.model('Movie', movieSchema);
