@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import MovieCard from './components/MovieCard';
+import Movie from './components/Movie';
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/movies')
+    fetch('https://aop-nosql.onrender.com/api/movies')
       .then(res => res.json())
-      .then(data => setMovies(data));
+      .then(data => {
+        setMovies(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Erro ao carregar filmes:', err);
+        setLoading(false);
+      });
   }, []);
 
+  if (loading) return <p>Loading movies...</p>;
+  if (movies.length === 0) return <p>No movies found.</p>;
+
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>AOP Movie App</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {movies.map((movie, i) => (
-          <MovieCard key={i} movie={movie} />
+    <div>
+      <h1>Filmes</h1>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        {movies.map(movie => (
+          <Movie key={movie._id} movie={movie} />
         ))}
       </div>
     </div>
