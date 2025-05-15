@@ -7,7 +7,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 20;
+  const limit = 20; // filmes por página
 
   useEffect(() => {
     setLoading(true);
@@ -24,11 +24,11 @@ function App() {
       });
   }, [page]);
 
-  const handlePrev = () => {
+  const goPrev = () => {
     if (page > 1) setPage(page - 1);
   };
 
-  const handleNext = () => {
+  const goNext = () => {
     if (page < totalPages) setPage(page + 1);
   };
 
@@ -37,19 +37,24 @@ function App() {
 
   return (
     <div>
-      <h1>Filmes</h1>
+      <h1>Filmes (Página {page} de {totalPages})</h1>
       <div className="movie-list">
         {movies.map(movie => (
           <MovieCard key={movie._id} movie={movie} />
         ))}
       </div>
-      <div style={{ textAlign: 'center', margin: '20px 0' }}>
-        <button onClick={handlePrev} disabled={page === 1}>Anterior</button>
-        <span style={{ margin: '0 15px' }}>Página {page} de {totalPages}</span>
-        <button onClick={handleNext} disabled={page === totalPages}>Próxima</button>
+
+      <div style={{ textAlign: 'center', margin: '20px' }}>
+        <button onClick={goPrev} disabled={page === 1}>
+          Anterior
+        </button>
+        <button onClick={goNext} disabled={page === totalPages} style={{ marginLeft: '10px' }}>
+          Próximo
+        </button>
       </div>
     </div>
   );
 }
 
 export default App;
+
