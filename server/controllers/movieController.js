@@ -9,14 +9,15 @@ exports.getMovies = async (req, res) => {
     // busca filmes paginados
     const movies = await Movie.find().skip(skip).limit(limit);
 
-    // opcional: contar total de filmes para saber quantas páginas há
+    // contar total de filmes para saber quantas páginas há
     const total = await Movie.countDocuments();
 
+    // responde com a estrutura correta
     res.json({
-      movies,
-      page,
-      totalPages: Math.ceil(total / limit),
-      totalMovies: total,
+      movies,                      // lista paginada
+      page,                        // página atual
+      totalPages: Math.ceil(total / limit), // total de páginas
+      totalMovies: total,          // total de filmes
     });
   } catch (error) {
     console.error(error);
@@ -24,13 +25,3 @@ exports.getMovies = async (req, res) => {
   }
 };
 
-exports.createMovie = async (req, res) => {
-  try {
-    const newMovie = new Movie(req.body);
-    const savedMovie = await newMovie.save();
-    res.status(201).json(savedMovie);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Erro ao criar filme' });
-  }
-};
