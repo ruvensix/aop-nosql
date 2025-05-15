@@ -15,18 +15,27 @@ function App() {
     fetch(`https://aop-nosql.onrender.com/api/movies?page=${page}&limit=${limit}`)
       .then(res => res.json())
       .then(data => {
-        setMovies(data.movies);
-        setTotalPages(data.totalPages);
+        console.log('API response:', data); // <== Log para debug
+        if (data && Array.isArray(data.movies)) {
+          setMovies(data.movies);
+          setTotalPages(data.totalPages || 1);
+        } else {
+          console.error('Formato de dados inesperado:', data);
+          setMovies([]);
+          setTotalPages(1);
+        }
         setLoading(false);
       })
       .catch(err => {
         console.error('Erro ao carregar filmes:', err);
+        setMovies([]);
+        setTotalPages(1);
         setLoading(false);
       });
   }, [page]);
 
   if (loading) return <p style={{ textAlign: 'center' }}>Loading movies...</p>;
-  if (!movies || movies.length === 0) return <p style={{ textAlign: 'center' }}>No movies found.</p>;
+  if (!movies.length) return <p style={{ textAlign: 'center' }}>No movies found.</p>;
 
   return (
     <div>
@@ -51,4 +60,5 @@ function App() {
 }
 
 export default App;
+
 
