@@ -1,34 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="MongoDB Movie Database with React frontend" />
     <title>MongoDB Movie Database</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>MFlix Movie Database</h1>
-        <div class="search-container">
-            <input type="text" id="search-input">
-            <button id="search-button">Search</button>
-        </div>
-    </header>
-    <main>
-        <div class="container">
-            <div id="loading">Loading movies...</div>
-            <div id="error" class="hidden"></div>
-            <div class="movies-grid" id="movies-container"></div>
-            <div id="movie-details" class="hidden">
-                <button id="back-button">Back</button>
-                <div id="detail-content"></div>
-                <div id="comments-section">
-                    <h3>Comments</h3>
-                    <div id="comments-container"></div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script src="main.js"></script>
-</body>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
 </html>
