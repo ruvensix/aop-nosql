@@ -5,9 +5,10 @@ import './styles.css';
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 20; // filmes por página
+  const limit = 20;
 
   useEffect(() => {
     setLoading(true);
@@ -24,32 +25,25 @@ function App() {
       });
   }, [page]);
 
-  const goPrev = () => {
-    if (page > 1) setPage(page - 1);
-  };
-
-  const goNext = () => {
-    if (page < totalPages) setPage(page + 1);
-  };
-
   if (loading) return <p style={{ textAlign: 'center' }}>Loading movies...</p>;
-  if (movies.length === 0) return <p style={{ textAlign: 'center' }}>No movies found.</p>;
+  if (!movies || movies.length === 0) return <p style={{ textAlign: 'center' }}>No movies found.</p>;
 
   return (
     <div>
-      <h1>Filmes (Página {page} de {totalPages})</h1>
+      <h1>Filmes</h1>
       <div className="movie-list">
         {movies.map(movie => (
           <MovieCard key={movie._id} movie={movie} />
         ))}
       </div>
 
-      <div style={{ textAlign: 'center', margin: '20px' }}>
-        <button onClick={goPrev} disabled={page === 1}>
-          Anterior
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <button onClick={() => setPage(p => Math.max(p - 1, 1))} disabled={page === 1}>
+          Página Anterior
         </button>
-        <button onClick={goNext} disabled={page === totalPages} style={{ marginLeft: '10px' }}>
-          Próximo
+        <span style={{ margin: '0 10px' }}>Página {page} de {totalPages}</span>
+        <button onClick={() => setPage(p => Math.min(p + 1, totalPages))} disabled={page === totalPages}>
+          Próxima Página
         </button>
       </div>
     </div>
